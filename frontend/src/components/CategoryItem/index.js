@@ -11,6 +11,8 @@ const CategoryItem = ({ data, activeCategory, setActiveCategory }) => {
             active={activeCategory} 
             id={data.id}
             onClick={handleCategoryClick}
+            data-tip={data.name}
+            data-for="tip-top"
         >
             <CategoryImage src={data.image} alt="" />
         </Container>
