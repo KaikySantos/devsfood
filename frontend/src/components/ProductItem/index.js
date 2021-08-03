@@ -11,9 +11,13 @@ import {
     ProductButton
 } from './styled';
 
-const ProductItem = ({data}) => {
+const ProductItem = ({data,onClick}) => {
+    const handleClick = () => {
+        onClick(data);
+    }
+
     return (
-        <Container>
+        <Container onClick={handleClick}>
             <ProductPhotoArea>
                 <ProductPhoto src={data.image} alt="" />
             </ProductPhotoArea>

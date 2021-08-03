@@ -14,12 +14,10 @@ align-items: center;
 `;
 
 export const ModalBody = styled.div`
-width: 300px;
-height: 300px;
 background: #FFF;
 border-radius: 20px;
 box-shadow: 0px 0px 50px #000;
-max-width: 100vh;
+max-width: 100vw;
 max-height: 95vh;
 overflow: auto;
 `;
