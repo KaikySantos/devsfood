@@ -6,7 +6,9 @@ import {
     CategoryArea, 
     CategoryList,
     ProductArea,
-    ProductList 
+    ProductList,
+    ProductPaginationArea,
+    ProductPaginationItem
 } from './styled';
 
 import api from '../../api';
@@ -20,13 +22,17 @@ export default () => {
     const [headerSearch, setHeaderSearch] = useState('');
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
 
     const [activeCategory, setActiveCategory] = useState(0);
+    const [activePage, setActivePage] = useState(0);
 
     const getProducts = async () => {
         const prods = await api.getProducts();
         if(prods.error == ''){
-            setProducts(prods.result.data)
+            setProducts(prods.result.data);
+            setTotalPages(prods.result.pages);
+            setActivePage(prods.result.page);
         }
     }
 
@@ -43,8 +49,9 @@ export default () => {
     }, []);
 
     useEffect(() => {
+        setProducts([]);
         getProducts();
-    }, [activeCategory])
+    }, [activeCategory, activePage]);
 
     return (
         <Container>
@@ -86,6 +93,21 @@ export default () => {
                     )}
                 </ProductList>
             </ProductArea>
+            }
+
+            {totalPages > 0 &&
+                <ProductPaginationArea>
+                    {Array(8).fill(0).map((i,k) => (
+                        <ProductPaginationItem 
+                            key={k} 
+                            active={activePage}
+                            current={k + 1}
+                            onClick={() => setActivePage(k+1)}
+                        >
+                            {k + 1}
+                        </ProductPaginationItem>
+                    ))}
+                </ProductPaginationArea>
             }
         </Container>
     );
